@@ -1,0 +1,18 @@
+{% load diary_tags %}
+<!-- /post-right -->
+<aside class="post-right hidden-xs">
+    <div class="p-4 post-right-item">
+        <h4 class="post-right-title">文章归档</h4>
+        {% for archive in archives %}
+            <ol class="list-unstyled mb-0">
+                <li><a href="{% url 'diary:index' %}archive/{{ archive | slice:":4" }}/{{ archive | slice:"5:7" }}">{{ archive }}</a></li>
+            </ol>
+        {% endfor %}
+    </div>
+    <div class="post-right-item">
+        <h4 class="post-right-title">联系方式</h4>
+            <p>Phone:18611896669</p>
+            <p>Email:me@zhangzhixiong.com</p>
+        </div>
+    </div>
+</aside>

@@ -1,0 +1,51 @@
+{% extends "diary/base.html" %}
+{% load diary_tags %}
+{% block content %}
+<div id="main-container" class="container clearfix">
+    <section class="post-left">
+        <div class="breadcrumb">您的位置： <a itemprop="breadcrumb" href="{% url "diary:index" %}">首页</a> » <span
+                                                                    class="current">{{ archive }}</span></div>
+        <div class="index-main clearfix">
+            <div class="main-title">
+                <h4 class="post-left-title">{{ archive }}（共计{{ num }}篇）</h4>
+            </div>
+            <div class="row">
+                {% for article in articles %}
+                    <div class="article-box clearfix excerpt-1">
+                        <div class="col-md-12">
+                            <h2><a href="{% url "diary:index" %}show-{{ article.id }}.html" target="_blank"
+                                                                                         title="{{ article.title }}">{{ article.title }}</a></h2>
+                            <p class="txtcont hidden-xs">{{ article.excerpt }}</p>
+                            <div class="meta"><span class="label label-info"><a
+                                                    href="{% url "diary:index" %}list-{{ article.category.id }}.html">{{ article.category.name }}</a></span>
+                                <time class="item"><i
+                                      class="fa fa-clock-o"></i>{{ article.date|date:"Y月m月d日 周w"|weekchinese }}
+                                </time>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="pagination">
+                <ul>
+                    {% if articles.has_previous %}
+                        <li class="prev-page"><a href="?page={{ articles.previous_page_number }}">上一页</a></li>
+                    {% endif %}
+
+                    {% for num in paginator.page_range %}
+                        {% list_page articles.number num %}
+                    {% endfor %}
+
+                    {% if articles.has_next %}
+                        <li class="next-page"><a href="?page={{ articles.next_page_number }}">下一页</a></li>
+                    {% else %}
+
+                    <li class="next-page"></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </section>
+    {% include "diary/right.html" %}
+</div>
+{% endblock %}
